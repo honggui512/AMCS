@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HMI</class>
+ <widget class="QWidget" name="HMI">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>599</width>
+    <height>512</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>HMI</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>601</width>
+     <height>521</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(208, 208, 208);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="label_16">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>0</y>
+      <width>361</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>楷体</family>
+      <pointsize>18</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(213, 0, 106);
+font: 18pt &quot;楷体&quot;;
+</string>
+    </property>
+    <property name="text">
+     <string>AMC-control-interface</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="rst_key">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>340</y>
+      <width>93</width>
+      <height>39</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 127);
+font: 18pt &quot;隶书&quot;;
+
+</string>
+    </property>
+    <property name="text">
+     <string>复位</string>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="name" stdset="0">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="mes_lab3">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>280</y>
+      <width>411</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 12pt &quot;楷体&quot;;
+background-color: rgb(208, 208, 208);
+text-decoration: underline;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="len_choose_key">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>161</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 0);
+
+font: 12pt &quot;楷体&quot;;</string>
+    </property>
+    <property name="text">
+     <string>长度选择</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="run_key">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>230</y>
+      <width>141</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 0);
+
+font: 12pt &quot;楷体&quot;;</string>
+    </property>
+    <property name="text">
+     <string>运行状态</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_13">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>90</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>当前生产序号</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>180</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>当前检测序号</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="mes_lab1">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>80</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(159, 239, 239);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="mes_lab2">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>170</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(159, 239, 239);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="next_key">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>339</y>
+      <width>93</width>
+      <height>39</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(0, 170, 127);
+font: 14pt &quot;隶书&quot;;
+
+</string>
+    </property>
+    <property name="text">
+     <string>NEXT</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="name" stdset="0">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="zrn_key">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>340</y>
+      <width>93</width>
+      <height>39</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(0, 170, 127);
+font: 18pt &quot;隶书&quot;;
+
+</string>
+    </property>
+    <property name="text">
+     <string>回零</string>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="name" stdset="0">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="photo">
+    <property name="geometry">
+     <rect>
+      <x>447</x>
+      <y>60</y>
+      <width>141</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="auto_key">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>270</y>
+      <width>121</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 0);
+font: 18pt &quot;隶书&quot;;
+background-color: rgb(0, 170, 127);
+
+</string>
+    </property>
+    <property name="text">
+     <string>全自动</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="name" stdset="0">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="mes_lab5">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>230</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 12pt &quot;楷体&quot;;
+background-color: rgb(208, 208, 208);
+text-decoration: underline;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="mes_lab4">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>140</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 12pt &quot;楷体&quot;;
+background-color: rgb(208, 208, 208);
+text-decoration: underline;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="hz_choose_key">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>170</y>
+      <width>161</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 0);
+
+font: 12pt &quot;楷体&quot;;</string>
+    </property>
+    <property name="text">
+     <string>检测频率</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="hold_key">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>350</y>
+      <width>121</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 0);
+font: 18pt &quot;隶书&quot;;
+background-color: rgb(218, 218, 0);
+
+</string>
+    </property>
+    <property name="text">
+     <string>暂停</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="name" stdset="0">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="mes_lab6">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>390</y>
+      <width>411</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 12pt &quot;楷体&quot;;
+background-color: rgb(208, 208, 208);
+text-decoration: underline;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>420</y>
+      <width>561</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(234, 255, 255);</string>
+    </property>
+    <property name="title">
+     <string>设置界面</string>
+    </property>
+    <widget class="QSplitter" name="splitter">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>501</width>
+       <height>39</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QPushButton" name="D_key1">
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 25, 127);
+font: 12pt &quot;隶书&quot;;
+
+</string>
+      </property>
+      <property name="text">
+       <string>直径下限</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <property name="name" stdset="0">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="D_key2">
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 170, 127);
+font: 12pt &quot;隶书&quot;;
+
+</string>
+      </property>
+      <property name="text">
+       <string>直径上限</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <property name="name" stdset="0">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="H_key1">
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 25, 127);
+font: 12pt &quot;隶书&quot;;
+
+</string>
+      </property>
+      <property name="text">
+       <string>高度下限</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <property name="name" stdset="0">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="H_key2">
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 170, 127);
+font: 12pt &quot;隶书&quot;;
+
+</string>
+      </property>
+      <property name="text">
+       <string>高度上限</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <property name="name" stdset="0">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="ok_key">
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(170, 255, 255);
+font: 16pt &quot;隶书&quot;;
+
+</string>
+      </property>
+      <property name="text">
+       <string>尺寸确认</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <property name="name" stdset="0">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <zorder>label_16</zorder>
+   <zorder>rst_key</zorder>
+   <zorder>mes_lab3</zorder>
+   <zorder>len_choose_key</zorder>
+   <zorder>run_key</zorder>
+   <zorder>label_13</zorder>
+   <zorder>label_10</zorder>
+   <zorder>mes_lab1</zorder>
+   <zorder>mes_lab2</zorder>
+   <zorder>zrn_key</zorder>
+   <zorder>next_key</zorder>
+   <zorder>photo</zorder>
+   <zorder>auto_key</zorder>
+   <zorder>mes_lab5</zorder>
+   <zorder>mes_lab4</zorder>
+   <zorder>hz_choose_key</zorder>
+   <zorder>hold_key</zorder>
+   <zorder>mes_lab6</zorder>
+   <zorder>groupBox</zorder>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
