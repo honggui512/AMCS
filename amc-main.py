@@ -16,10 +16,10 @@ I love animals. They taste delicious.
 
 '''
 import sys
-from PyQt5 import sip               #未添加时，生成的exe文件会损坏
+from PyQt5 import sip  # 未添加时，生成的exe文件会损坏
 import modbus_tk.defines as cst
 from modbus_tk import modbus_tcp
-from PyQt5 import QtWidgets,QtCore
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QThread
 from PyQt5.QtGui import QPixmap
@@ -29,43 +29,52 @@ import HMI
 
 from time import sleep
 
-#用于TCP打包传输
-from socket import*
+# 用于TCP打包传输
+from socket import *
 from ctypes import *
 from struct import *
-#OpenCV调用库。feature是莫编辑
+# OpenCV调用库。feature是莫编辑
 import cv2
 import feature
+
+
 class PLCRequest(Structure):
     _fields_ = [("magic", c_uint32),
                 ("version", c_uint8),
-                ("pad", c_char * 3),        ##__pad定义时，使用class调用时报错
-                ("machineId", c_char * 64),  #通道号  1
-                ("partNumber", c_char * 64),    #产品号，
-                ("routineName", c_char * 64),   #程序号（autocomp
-                ("partSeq", c_uint64),          #检测序号
-                ("partSeqCutting", c_uint64)    #现在在加工的  +1
+                ("pad", c_char * 3),  ##__pad定义时，使用class调用时报错
+                ("machineId", c_char * 64),  # 通道号  1
+                ("partNumber", c_char * 64),  # 产品号，
+                ("routineName", c_char * 64),  # 程序号（autocomp
+                ("partSeq", c_uint64),  # 检测序号
+                ("partSeqCutting", c_uint64)  # 现在在加工的  +1
                 ]
+
+
 class PLCResponse(Structure):
     _fields_ = [("magic", c_uint32),
                 ("version", c_uint8),
-                ("status", c_uint8),        #OK
-                ("pad", c_char * 2),        ##__pad定义时，使用class调用时报错
+                ("status", c_uint8),  # OK
+                ("pad", c_char * 2),  ##__pad定义时，使用class调用时报错
                 ("machineId", c_char * 64),
                 ("partNumber", c_char * 64),
                 ("partSeq", c_uint64),
                 ("message", c_char * 256)
                 ]
+
+
 '''
     线程T1：
     一直扫描PLC点位
 '''
+
+
 class GetPlcDateTread(QThread):
-    def __init__(self, Win):                    #复用原调用类的类变量
+    def __init__(self, Win):  # 复用原调用类的类变量
         super(GetPlcDateTread, self).__init__()
         self.win = Win
         self.HmiWin = Win.HmiWin
-        self.isStart=False
+        self.isStart = False
+
     def run(self):
         while self.isStart:
             try:
@@ -88,23 +97,23 @@ class GetPlcDateTread(QThread):
                 else:
                     Ddate = self.win.master.execute(1, cst.READ_HOLDING_REGISTERS, 112, 8)
                     Mdate = self.win.master.execute(2, cst.READ_COILS, 20, 10)
-                    if int(Mdate[0])==1 and int(Mdate[1])==0:
+                    if int(Mdate[0]) == 1 and int(Mdate[1]) == 0:
                         self.HmiWin.mes_lab1.setText(str(Ddate[0]))
                         self.HmiWin.mes_lab2.setText(str(Ddate[2]))
-                    elif int(Mdate[0])==0 and int(Mdate[1])==1:
+                    elif int(Mdate[0]) == 0 and int(Mdate[1]) == 1:
                         self.HmiWin.mes_lab1.setText(str(Ddate[4]))
                         self.HmiWin.mes_lab2.setText(str(Ddate[6]))
                     else:
                         self.HmiWin.mes_lab1.setText("0")
                         self.HmiWin.mes_lab2.setText("0")
                         # self.HmiWin.photo.hide()
-                    if  (int(Mdate[4])==1 or int(Mdate[6])==1) and self.win.T2.isStart == False:
+                    if (int(Mdate[4]) == 1 or int(Mdate[6]) == 1) and self.win.T2.isStart == False:
                         self.win.T2.isStart = True
                         self.win.T2.start()
                         sleep(0.1)
                         self.win.master.execute(2, cst.WRITE_MULTIPLE_COILS, 24, output_value=[0])
                         self.win.master.execute(2, cst.WRITE_MULTIPLE_COILS, 26, output_value=[0])
-                    if  int(Mdate[8])==1  and self.win.T4.isStart == False:     #防止反复开启
+                    if int(Mdate[8]) == 1 and self.win.T4.isStart == False:  # 防止反复开启
                         self.win.T4.isStart = True
                         self.win.T4.start()
                         sleep(0.1)
@@ -138,35 +147,41 @@ class GetPlcDateTread(QThread):
                     elif m_error[13] == 1:
                         self.HmiWin.mes_lab3.setText("低通检测超时，处理完，复位回零！")  # 报警显示
                     elif m_error[14] == 1:
-                        self.HmiWin.mes_lab3.setText("漏斗卡料超时，处理完，复位回零！")#报警显示
+                        self.HmiWin.mes_lab3.setText("漏斗卡料超时，处理完，复位回零！")  # 报警显示
             except:
                 self.HmiWin.hide()  # 不需要close
                 self.win.show()
                 self.isStart = False
                 self.quit()  # 退出线程
+
+
 class ZrnWaitTread(QThread):
-    def __init__(self, Win):                    #复用原调用类的类变量
+    def __init__(self, Win):  # 复用原调用类的类变量
         super(ZrnWaitTread, self).__init__()
         self.win = Win
         self.HmiWin = Win.HmiWin
+
     def run(self):
         Mdate = self.win.master.execute(2, cst.READ_COILS, 2, 1)
-        while Mdate[0]==0:
+        while Mdate[0] == 0:
             Mdate = self.win.master.execute(2, cst.READ_COILS, 2, 1)
             pass
         self.HmiWin.mes_lab3.setText("回零完成")
         self.quit()  # 退出线程
+
+
 class GetCmmDateTread(QThread):
-    def __init__(self, Win):                    #复用原调用类的类变量
+    def __init__(self, Win):  # 复用原调用类的类变量
         super(GetCmmDateTread, self).__init__()
         self.win = Win
         self.HmiWin = Win.HmiWin
-        self.isStart=False
-        self.tcp_tx1 = PLCRequest (0xC0FEED0C, 1, b'', b'machine_1', b'routine_1', b'partZZZ', 55111, 55239)
-        self.tcp_tx2 = PLCRequest (0xC0FEED0C, 1, b'', b'machine_2', b'routine_2', b'partBBB', 55111, 55239)
+        self.isStart = False
+        self.tcp_tx1 = PLCRequest(0xC0FEED0C, 1, b'', b'machine_1', b'routine_1', b'partZZZ', 55111, 55239)
+        self.tcp_tx2 = PLCRequest(0xC0FEED0C, 1, b'', b'machine_2', b'routine_2', b'partBBB', 55111, 55239)
 
         self.tcp_rx1 = PLCResponse(0xC0FEED0D, 1, 2, b'', b'routine_1', b'partZZZ', 5311, b'')
         self.tcp_rx2 = PLCResponse(0xC0FEED0D, 1, 2, b'', b'routine_2', b'partBBB', 5311, b'')
+
     """
     Modbus-TCP读取完成标志位
         if 
@@ -179,13 +194,14 @@ class GetCmmDateTread(QThread):
                 计时报警跳出报警界面
                 QMessageBox.information(self, "TCP通讯失败",self.tr("请检查CMM软件状态!"))
     """
+
     def run(self):
         try:
             Ddate = self.win.master.execute(1, cst.READ_HOLDING_REGISTERS, 112, 8)
             Mdate = self.win.master.execute(2, cst.READ_COILS, 20, 5)
             if int(Mdate[0]) == 1 and int(Mdate[1]) == 0:
-                self.tcp_tx1.partSeqCutting = int(Ddate[0]+1)
-                self.tcp_tx1.partSeq        = int(Ddate[2])
+                self.tcp_tx1.partSeqCutting = int(Ddate[0] + 1)
+                self.tcp_tx1.partSeq = int(Ddate[2])
                 buf = pack('!IB3s64s64s64sQQ', self.tcp_tx1.magic, self.tcp_tx1.version, self.tcp_tx1.pad, \
                            self.tcp_tx1.machineId, self.tcp_tx1.partNumber, self.tcp_tx1.routineName, \
                            self.tcp_tx1.partSeq, self.tcp_tx1.partSeqCutting)
@@ -198,7 +214,7 @@ class GetCmmDateTread(QThread):
                     if not more:
                         break
                     buf += more
-                #许后泽协助编辑
+                # 许后泽协助编辑
                 resp = PLCResponse()
                 resp.magic, resp.version, resp.status, \
                 resp.__pad, resp.machineId, resp.partNumber, \
@@ -238,23 +254,28 @@ class GetCmmDateTread(QThread):
             print("CMM线程挂了")
             self.quit()  # 退出线程
             self.win.T1.isStart = False
-            self.win.statusTcp = False   #再次通信时，打开
+            self.win.statusTcp = False  # 再次通信时，打开
             self.win.T1.quit()
+
+
 '''
     OpenCV判断产品正反问题
 '''
+
+
 class MiscolorTread(QThread):
-    def __init__(self, Win):                    #复用原调用类的类变量
+    def __init__(self, Win):  # 复用原调用类的类变量
         super(MiscolorTread, self).__init__()
         self.win = Win
         self.HmiWin = Win.HmiWin
         self.isStart = False
         self.flag = False
+
     def run(self):
         self.flag = True
-        self.win.cap.read()     #预读一次，防止黑屏
+        self.win.cap.read()  # 预读一次，防止黑屏
 
-        while self.flag:        #循环检测，直到有结果
+        while self.flag:  # 循环检测，直到有结果
             ret, frame = self.win.cap.read()
             cv2.imwrite(self.win.photoPath, feature.cropImg(frame))
             self.maxmatch1, self.meanmatch1, self.matchname1 = feature.match(self.win.path1, self.win.photoPath)
@@ -289,21 +310,24 @@ class MiscolorTread(QThread):
         sleep(0.1)
         self.isStart = False
         self.quit()  # 退出线程
+
+
 class AutoCompareTread(QThread):
-    def __init__(self, Win):                    #复用原调用类的类变量
+    def __init__(self, Win):  # 复用原调用类的类变量
         super(AutoCompareTread, self).__init__()
         self.win = Win
         self.HmiWin = Win.HmiWin
         self.isStart = False
         self.D0 = 0
+
     def run(self):
-        while self.isStart :
+        while self.isStart:
             mCode = self.win.master.execute(2, cst.READ_COILS, 20, 2)
             Ddate = self.win.master.execute(1, cst.READ_HOLDING_REGISTERS, 112, 8)
-            if int(Ddate[0]) != self.D0 :
+            if int(Ddate[0]) != self.D0:
                 self.D0 = int(Ddate[0])
-                if (self.D0-self.win.baseValue)%self.win.hz_int == 0  and self.win.auto_start_flag == True:
-                    if mCode[0] == 0 and mCode[1] == 0 :
+                if (self.D0 - self.win.baseValue) % self.win.hz_int == 0 and self.win.auto_start_flag == True:
+                    if mCode[0] == 0 and mCode[1] == 0:
                         self.win.master.execute(2, cst.WRITE_MULTIPLE_COILS, 20, output_value=[1, 0])
                     else:
                         self.HmiWin.mes_lab6.setText("循环周期比较短，待运行完成后，重新更改频率")
@@ -312,16 +336,22 @@ class AutoCompareTread(QThread):
                         self.win.hz_choose_flag = False
                         self.isStart = False
                         self.quit()
+
+
 '''
 原先问题：子界面关闭时，不会关闭主界面添加的线程T1
 解决:信号与槽函数的编辑。
 重新定义结束的方法，添加信号
 '''
+
+
 class HmiWin(QtWidgets.QDialog, HMI.Ui_HMI):
-    signal = QtCore.pyqtSignal(str) #str是返回的数据类型
+    signal = QtCore.pyqtSignal(str)  # str是返回的数据类型
+
     def __init__(self):
         super(HmiWin, self).__init__()
         self.setupUi(self)
+
     def closeEvent(self, event):
         reply = QtWidgets.QMessageBox.question(self,
                                                '本程序',
@@ -331,10 +361,12 @@ class HmiWin(QtWidgets.QDialog, HMI.Ui_HMI):
         if reply == QtWidgets.QMessageBox.Yes:
             print("it's over")
             cv2.destroyAllWindows()
-            self.signal.emit("12345")   #传递数据，可以在槽函数中调用数据
+            self.signal.emit("12345")  # 传递数据，可以在槽函数中调用数据
             event.accept()
         else:
             event.ignore()
+
+
 class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
     def __init__(self):
         super(MainWin, self).__init__()
@@ -350,7 +382,7 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
         self.h = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.w = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.cap.read()
-        self.HmiWin=HmiWin()
+        self.HmiWin = HmiWin()
         self.HmiWin.len_choose_key.clicked.connect(self.lenChooseMet)
         self.HmiWin.hz_choose_key.clicked.connect(self.hzChooseMet)
         self.HmiWin.auto_key.clicked.connect(self.autoStartMet)
@@ -359,7 +391,7 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
         self.HmiWin.next_key.clicked.connect(self.nextMet)
         self.HmiWin.rst_key.clicked.connect(self.rstMet)
         self.HmiWin.zrn_key.clicked.connect(self.zrnMet)
-        self.HmiWin.signal.connect(self.hmiCloseThread)  #槽函数的使用
+        self.HmiWin.signal.connect(self.hmiCloseThread)  # 槽函数的使用
         self.showPhoto = QPixmap(self.photoPath)
 
         self.HmiWin.D_key1.clicked.connect(self.diameterMet1)
@@ -384,7 +416,7 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
         self.hz_choose_flag = False
         self.hz_int = 0
         self.auto_start_flag = False
-        self.baseValue =0
+        self.baseValue = 0
 
     def diameterMet1(self):
         text, ok = QInputDialog.getDouble(self, '直径下限', '请输入数值mm：', 2.98, 2.3, 8, 2)
@@ -392,24 +424,28 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
             print(text)
             print(type(text))
             self.diameter1 = text
+
     def diameterMet2(self):
         text, ok = QInputDialog.getDouble(self, '直径上限', '请输入数值mm：', 2.98, 2.3, 8, 2)
         if ok:
             print(text)
             print(type(text))
             self.diameter2 = text
+
     def heightMet1(self):
         text, ok = QInputDialog.getDouble(self, '高度下限', '请输入数值mm：', 10.00, 9.0, 29, 2)
         if ok:
             print(text)
             print(type(text))
             self.height1 = text
+
     def heightMet2(self):
         text, ok = QInputDialog.getDouble(self, '高度上限', '请输入数值mm：', 10.00, 9.0, 29, 2)
         if ok:
             print(text)
             print(type(text))
             self.height2 = text
+
     def okMet(self):
         ok = QMessageBox.information(self, '请确认设定尺寸',
                                      '直径下限' + str(self.diameter1) + 'mm' + '直径上限' + str(self.diameter2) + 'mm'
@@ -421,9 +457,8 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
             else:
                 QMessageBox.information(self, "warnning", self.tr("请重新确认上下限的选择"))
 
-
-    def hmiCloseThread(self,strMsg):
-        print(strMsg)       #信号被打开后会调用并传递数据
+    def hmiCloseThread(self, strMsg):
+        print(strMsg)  # 信号被打开后会调用并传递数据
         self.cap.release()
         cv2.destroyAllWindows()
         self.T1.isStart = False
@@ -436,6 +471,7 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
         self.T4.quit()
         self.T5.isStart = False
         self.T5.quit()
+
     def tcpConnect(self):
         self.HOST = 'localhost'  # 主机地址
         self.PORT = 1088  # 端口号
@@ -452,11 +488,12 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
                 break
             except:
                 QMessageBox.information(self, "请先打开CMM软件", self.tr("IP：localhost，port：1088"))
+
     def ipConnect(self):
         try:
             self.master = modbus_tcp.TcpMaster(host=self.ip_line.text(), port=502)
             self.master.set_timeout(1.0)
-            self.master.execute(2, cst.WRITE_MULTIPLE_COILS, 1, output_value=[0])       #测试有没通讯成功，可以初始化
+            self.master.execute(2, cst.WRITE_MULTIPLE_COILS, 1, output_value=[0])  # 测试有没通讯成功，可以初始化
             """
             再次连接后，需要还原原先界面数据
             """
@@ -485,7 +522,7 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
                 self.tcpConnect()
             self.HmiWin.show()
             sleep(0.2)
-            self.hide()             #不需要close
+            self.hide()  # 不需要close
             self.T1.isStart = True
             self.T1.start()
         except:
@@ -495,10 +532,11 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
                 self.ip_line.setText(str(text))
             self.T1.isStart = False
             self.T1.quit()
+
     def lenChooseMet(self):
         zrn_M2 = self.master.execute(2, cst.READ_COILS, 2, 1)
         doing_M100 = self.master.execute(2, cst.READ_COILS, 100, 1)
-        if  int(zrn_M2[0]) == 1:
+        if int(zrn_M2[0]) == 1:
             if int(doing_M100[0]) == 0:
                 text, ok = QInputDialog.getInt(self, '高度设置', '请输入高度mm：', min=10)
                 if ok:
@@ -516,6 +554,7 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
         else:
             QMessageBox.information(self, "warnning", self.tr("请先回零，再进行动作!"))
         self.HmiWin.len_choose_key.setChecked(False)
+
     def hzChooseMet(self):
         zrn_M2 = self.master.execute(2, cst.READ_COILS, 2, 1)
         doing_M100 = self.master.execute(2, cst.READ_COILS, 100, 1)
@@ -523,8 +562,8 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
             if int(doing_M100[0]) == 0:
                 text, ok = QInputDialog.getInt(self, '循环次数设定', '请输入循环部件书：', min=3)
                 if ok:
-                    if  3 <= int(text) :
-                        self.HmiWin.mes_lab5.setText(str(text)+'件')
+                    if 3 <= int(text):
+                        self.HmiWin.mes_lab5.setText(str(text) + '件')
                         self.hz_choose_flag = True
                         self.hz_int = int(text)
                         self.HmiWin.hz_choose_key.setChecked(True)
@@ -536,6 +575,7 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
                 QMessageBox.information(self, "warnning", self.tr("运行中，请勿切换!"))
         else:
             QMessageBox.information(self, "warnning", self.tr("请先回零，再进行动作!"))
+
     def autoStartMet(self):
         zrn_M2 = self.master.execute(2, cst.READ_COILS, 2, 1)
         Ddate = self.master.execute(1, cst.READ_HOLDING_REGISTERS, 112, 8)
@@ -543,13 +583,13 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
         if int(zrn_M2[0]) == 1:
             if self.len_choose_flag == True and self.hz_choose_flag == True:
                 ok = QMessageBox.information(self, '请确认尺寸',
-                                                '长度'+str(self.length_int)+'mm'+'循环个数'+str(self.hz_int))
+                                             '长度' + str(self.length_int) + 'mm' + '循环个数' + str(self.hz_int))
                 if ok:
                     if self.auto_start_flag == False:
                         self.HmiWin.len_choose_key.setChecked(True)
                         self.HmiWin.hz_choose_key.setChecked(False)
-                        self.master.execute(1, cst.WRITE_MULTIPLE_REGISTERS, 200, output_value=[(self.length_int-10)])
-                        self.master.execute(2, cst.WRITE_MULTIPLE_COILS, 20, output_value=[1,0])
+                        self.master.execute(1, cst.WRITE_MULTIPLE_REGISTERS, 200, output_value=[(self.length_int - 10)])
+                        self.master.execute(2, cst.WRITE_MULTIPLE_COILS, 20, output_value=[1, 0])
                         self.auto_start_flag = True
 
                         self.HmiWin.hold_key.setChecked(False)
@@ -568,10 +608,11 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
                 QMessageBox.information(self, "warnning", self.tr("请先选择好产品种类及循环次数"))
         else:
             QMessageBox.information(self, "warnning", self.tr("请先回零，再进行动作!"))
+
     def autoHoldMet(self):
         zrn_M2 = self.master.execute(2, cst.READ_COILS, 2, 1)
         if int(zrn_M2[0]) == 1:
-            if self.len_choose_flag == True and self.hz_choose_flag == True\
+            if self.len_choose_flag == True and self.hz_choose_flag == True \
                     and self.auto_start_flag == True:
                 self.auto_start_flag = False
                 self.HmiWin.auto_key.setChecked(False)
@@ -583,6 +624,7 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
         else:
             QMessageBox.information(self, "warnning", self.tr("请先回零，再进行动作!"))
             self.HmiWin.hold_key.setChecked(False)
+
     def runMet(self):
         Mzrn = self.master.execute(2, cst.READ_COILS, 2, 1)
         if int(Mzrn[0]) == 1:
@@ -597,6 +639,7 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
         else:
             QMessageBox.information(self, "warnning", self.tr("请先回零，再进行动作!"))
             self.HmiWin.run_key.setChecked(False)
+
     def nextMet(self):
         self.master.execute(2, cst.WRITE_MULTIPLE_COILS, 800, output_value=[1])
         if self.status:
@@ -605,10 +648,12 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
         else:
             self.HmiWin.next_key.setText("再下一步")
             self.status = 1
+
     def rstMet(self):
         self.master.execute(2, cst.WRITE_MULTIPLE_COILS, 4, output_value=[1])
         sleep(0.5)
         self.master.execute(2, cst.WRITE_MULTIPLE_COILS, 4, output_value=[0])
+
     def zrnMet(self):
         """
         回零按钮触发时，查看是否运行中，（正在回零，正在测量M20低通M21自锁）
@@ -622,10 +667,11 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
         else:
             if int(zrn_M2[0]) == 1:
                 QMessageBox.information(self, "warnning", self.tr("已经回零成功，无需回零!"))
-            else :
+            else:
                 self.HmiWin.mes_lab3.setText("")  # 报警显示
                 self.master.execute(2, cst.WRITE_MULTIPLE_COILS, 1, output_value=[1])
                 self.T3.start()
+
     def closeEvent(self, event):
         reply = QtWidgets.QMessageBox.question(self,
                                                '本程序',
@@ -648,10 +694,14 @@ class MainWin(QtWidgets.QDialog, ipconnect.Ui_MainWindow):
             event.accept()
         else:
             event.ignore()
+
+
 def main():
-    app = QtWidgets.QApplication(sys.argv)  #创建应用程序
+    app = QtWidgets.QApplication(sys.argv)  # 创建应用程序
     run = MainWin()
     run.show()
     sys.exit(app.exec_())
+
+
 if __name__ == "__main__":
     main()
