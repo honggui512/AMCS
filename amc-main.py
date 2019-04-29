@@ -2,6 +2,7 @@
 # code is far away from bugs with the god animal protecting
 I love animals. They taste delicious.
 hello wo de xiao ke ai
+helloworld shuohua
              ┏┓   ┏┓
             ┏┛┻━━━┛┻┓
 卍          ┃   ☀   ┃
@@ -42,10 +43,10 @@ import feature
 class PLCRequest(Structure):
     _fields_ = [("magic", c_uint32),
                 ("version", c_uint8),
-                ("pad", c_char * 3),  ##__pad定义时，使用class调用时报错
+                ("pad", c_char * 3),  # "__pad定义时"，使用class调用时报错
                 ("machineId", c_char * 64),  # 通道号  1
                 ("partNumber", c_char * 64),  # 产品号，
-                ("routineName", c_char * 64),  # 程序号（autocomp
+                ("routineName", c_char * 64),  # 程序号"autocomp"
                 ("partSeq", c_uint64),  # 检测序号
                 ("partSeqCutting", c_uint64)  # 现在在加工的  +1
                 ]
@@ -55,7 +56,7 @@ class PLCResponse(Structure):
     _fields_ = [("magic", c_uint32),
                 ("version", c_uint8),
                 ("status", c_uint8),  # OK
-                ("pad", c_char * 2),  ##__pad定义时，使用class调用时报错
+                ("pad", c_char * 2),  # "__pad定义时"，使用class调用时报错
                 ("machineId", c_char * 64),
                 ("partNumber", c_char * 64),
                 ("partSeq", c_uint64),
@@ -157,10 +158,10 @@ class GetPlcDateTread(QThread):
 
 
 class ZrnWaitTread(QThread):
-    def __init__(self, Win):  # 复用原调用类的类变量
+    def __init__(self, win):  # 复用原调用类的类变量
         super(ZrnWaitTread, self).__init__()
-        self.win = Win
-        self.HmiWin = Win.HmiWin
+        self.win = win
+        self.HmiWin = win.HmiWin
 
     def run(self):
         Mdate = self.win.master.execute(2, cst.READ_COILS, 2, 1)
@@ -203,8 +204,8 @@ class GetCmmDateTread(QThread):
             if int(Mdate[0]) == 1 and int(Mdate[1]) == 0:
                 self.tcp_tx1.partSeqCutting = int(Ddate[0] + 1)
                 self.tcp_tx1.partSeq = int(Ddate[2])
-                buf = pack('!IB3s64s64s64sQQ', self.tcp_tx1.magic, self.tcp_tx1.version, self.tcp_tx1.pad, \
-                           self.tcp_tx1.machineId, self.tcp_tx1.partNumber, self.tcp_tx1.routineName, \
+                buf = pack('!IB3s64s64s64sQQ', self.tcp_tx1.magic, self.tcp_tx1.version, self.tcp_tx1.pad,
+                           self.tcp_tx1.machineId, self.tcp_tx1.partNumber, self.tcp_tx1.routineName,
                            self.tcp_tx1.partSeq, self.tcp_tx1.partSeqCutting)
                 print("pack 成功")
                 self.win.tcpCliSock.sendall(buf)
