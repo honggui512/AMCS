@@ -1,6 +1,7 @@
 '''
 # code is far away from bugs with the god animal protecting
 I love animals. They taste delicious.
+hello wo de xiao ke ai
              ┏┓   ┏┓
             ┏┛┻━━━┛┻┓
 卍          ┃   ☀   ┃
