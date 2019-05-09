@@ -74,10 +74,10 @@ class Ui_MainWindow(object):
         self.ip_key.setGeometry(QtCore.QRect(420, 140, 101, 51))
         self.ip_key.setStyleSheet("color: rgb(0, 0, 0);")
         self.ip_key.setObjectName("ip_key")
-        # MainWindow.setCentralWidget(self.centralwidget)
+        MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
-        # MainWindow.setStatusBar(self.statusbar)
+        MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)

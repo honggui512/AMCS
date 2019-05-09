@@ -8,6 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
 class Ui_HMI(object):
     def setupUi(self, HMI):
         HMI.setObjectName("HMI")
@@ -29,16 +30,16 @@ class Ui_HMI(object):
         font.setWeight(50)
         self.label_16.setFont(font)
         self.label_16.setStyleSheet("color: rgb(213, 0, 106);\n"
-"font: 18pt \"楷体\";\n"
-"")
+                                    "font: 18pt \"楷体\";\n"
+                                    "")
         self.label_16.setObjectName("label_16")
         self.rst_key = QtWidgets.QPushButton(self.frame)
         self.rst_key.setGeometry(QtCore.QRect(30, 340, 93, 39))
         self.rst_key.setStyleSheet("color: rgb(0, 0, 0);\n"
-"background-color: rgb(255, 255, 127);\n"
-"font: 18pt \"隶书\";\n"
-"\n"
-"")
+                                   "background-color: rgb(255, 255, 127);\n"
+                                   "font: 18pt \"隶书\";\n"
+                                   "\n"
+                                   "")
         self.rst_key.setCheckable(False)
         self.rst_key.setChecked(False)
         self.rst_key.setProperty("name", "")
@@ -46,23 +47,23 @@ class Ui_HMI(object):
         self.mes_lab3 = QtWidgets.QLabel(self.frame)
         self.mes_lab3.setGeometry(QtCore.QRect(30, 280, 411, 31))
         self.mes_lab3.setStyleSheet("font: 12pt \"楷体\";\n"
-"background-color: rgb(208, 208, 208);\n"
-"text-decoration: underline;")
+                                    "background-color: rgb(208, 208, 208);\n"
+                                    "text-decoration: underline;")
         self.mes_lab3.setText("")
-        self.mes_lab3.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.mes_lab3.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.mes_lab3.setObjectName("mes_lab3")
         self.len_choose_key = QtWidgets.QPushButton(self.frame)
         self.len_choose_key.setGeometry(QtCore.QRect(20, 80, 161, 51))
         self.len_choose_key.setStyleSheet("color: rgb(0, 0, 0);\n"
-"\n"
-"font: 12pt \"楷体\";")
+                                          "\n"
+                                          "font: 12pt \"楷体\";")
         self.len_choose_key.setCheckable(True)
         self.len_choose_key.setObjectName("len_choose_key")
         self.run_key = QtWidgets.QPushButton(self.frame)
         self.run_key.setGeometry(QtCore.QRect(200, 230, 141, 41))
         self.run_key.setStyleSheet("color: rgb(0, 0, 0);\n"
-"\n"
-"font: 12pt \"楷体\";")
+                                   "\n"
+                                   "font: 12pt \"楷体\";")
         self.run_key.setCheckable(True)
         self.run_key.setObjectName("run_key")
         self.label_13 = QtWidgets.QLabel(self.frame)
@@ -94,10 +95,10 @@ class Ui_HMI(object):
         self.next_key = QtWidgets.QPushButton(self.frame)
         self.next_key.setGeometry(QtCore.QRect(170, 339, 93, 39))
         self.next_key.setStyleSheet("color: rgb(0, 0, 0);\n"
-"background-color: rgb(0, 170, 127);\n"
-"font: 14pt \"隶书\";\n"
-"\n"
-"")
+                                    "background-color: rgb(0, 170, 127);\n"
+                                    "font: 14pt \"隶书\";\n"
+                                    "\n"
+                                    "")
         self.next_key.setCheckable(True)
         self.next_key.setChecked(False)
         self.next_key.setProperty("name", "")
@@ -105,10 +106,10 @@ class Ui_HMI(object):
         self.zrn_key = QtWidgets.QPushButton(self.frame)
         self.zrn_key.setGeometry(QtCore.QRect(310, 340, 93, 39))
         self.zrn_key.setStyleSheet("color: rgb(0, 0, 0);\n"
-"background-color: rgb(0, 170, 127);\n"
-"font: 18pt \"隶书\";\n"
-"\n"
-"")
+                                   "background-color: rgb(0, 170, 127);\n"
+                                   "font: 18pt \"隶书\";\n"
+                                   "\n"
+                                   "")
         self.zrn_key.setCheckable(False)
         self.zrn_key.setChecked(False)
         self.zrn_key.setProperty("name", "")
@@ -119,10 +120,10 @@ class Ui_HMI(object):
         self.auto_key = QtWidgets.QPushButton(self.frame)
         self.auto_key.setGeometry(QtCore.QRect(460, 270, 121, 61))
         self.auto_key.setStyleSheet("color: rgb(0, 0, 0);\n"
-"font: 18pt \"隶书\";\n"
-"background-color: rgb(0, 170, 127);\n"
-"\n"
-"")
+                                    "font: 18pt \"隶书\";\n"
+                                    "background-color: rgb(0, 170, 127);\n"
+                                    "\n"
+                                    "")
         self.auto_key.setCheckable(True)
         self.auto_key.setChecked(False)
         self.auto_key.setProperty("name", "")
@@ -130,33 +131,33 @@ class Ui_HMI(object):
         self.mes_lab5 = QtWidgets.QLabel(self.frame)
         self.mes_lab5.setGeometry(QtCore.QRect(20, 230, 161, 31))
         self.mes_lab5.setStyleSheet("font: 12pt \"楷体\";\n"
-"background-color: rgb(208, 208, 208);\n"
-"text-decoration: underline;")
+                                    "background-color: rgb(208, 208, 208);\n"
+                                    "text-decoration: underline;")
         self.mes_lab5.setText("")
         self.mes_lab5.setAlignment(QtCore.Qt.AlignCenter)
         self.mes_lab5.setObjectName("mes_lab5")
         self.mes_lab4 = QtWidgets.QLabel(self.frame)
         self.mes_lab4.setGeometry(QtCore.QRect(20, 140, 161, 31))
         self.mes_lab4.setStyleSheet("font: 12pt \"楷体\";\n"
-"background-color: rgb(208, 208, 208);\n"
-"text-decoration: underline;")
+                                    "background-color: rgb(208, 208, 208);\n"
+                                    "text-decoration: underline;")
         self.mes_lab4.setText("")
         self.mes_lab4.setAlignment(QtCore.Qt.AlignCenter)
         self.mes_lab4.setObjectName("mes_lab4")
         self.hz_choose_key = QtWidgets.QPushButton(self.frame)
         self.hz_choose_key.setGeometry(QtCore.QRect(20, 170, 161, 51))
         self.hz_choose_key.setStyleSheet("color: rgb(0, 0, 0);\n"
-"\n"
-"font: 12pt \"楷体\";")
+                                         "\n"
+                                         "font: 12pt \"楷体\";")
         self.hz_choose_key.setCheckable(True)
         self.hz_choose_key.setObjectName("hz_choose_key")
         self.hold_key = QtWidgets.QPushButton(self.frame)
         self.hold_key.setGeometry(QtCore.QRect(460, 350, 121, 61))
         self.hold_key.setStyleSheet("color: rgb(0, 0, 0);\n"
-"font: 18pt \"隶书\";\n"
-"background-color: rgb(218, 218, 0);\n"
-"\n"
-"")
+                                    "font: 18pt \"隶书\";\n"
+                                    "background-color: rgb(218, 218, 0);\n"
+                                    "\n"
+                                    "")
         self.hold_key.setCheckable(True)
         self.hold_key.setChecked(False)
         self.hold_key.setProperty("name", "")
@@ -164,8 +165,8 @@ class Ui_HMI(object):
         self.mes_lab6 = QtWidgets.QLabel(self.frame)
         self.mes_lab6.setGeometry(QtCore.QRect(20, 390, 411, 31))
         self.mes_lab6.setStyleSheet("font: 12pt \"楷体\";\n"
-"background-color: rgb(208, 208, 208);\n"
-"text-decoration: underline;")
+                                    "background-color: rgb(208, 208, 208);\n"
+                                    "text-decoration: underline;")
         self.mes_lab6.setText("")
         self.mes_lab6.setAlignment(QtCore.Qt.AlignCenter)
         self.mes_lab6.setObjectName("mes_lab6")
@@ -179,50 +180,50 @@ class Ui_HMI(object):
         self.splitter.setObjectName("splitter")
         self.D_key1 = QtWidgets.QPushButton(self.splitter)
         self.D_key1.setStyleSheet("color: rgb(0, 0, 0);\n"
-"background-color: rgb(255, 25, 127);\n"
-"font: 12pt \"隶书\";\n"
-"\n"
-"")
+                                  "background-color: rgb(255, 25, 127);\n"
+                                  "font: 12pt \"隶书\";\n"
+                                  "\n"
+                                  "")
         self.D_key1.setCheckable(False)
         self.D_key1.setChecked(False)
         self.D_key1.setProperty("name", "")
         self.D_key1.setObjectName("D_key1")
         self.D_key2 = QtWidgets.QPushButton(self.splitter)
         self.D_key2.setStyleSheet("color: rgb(0, 0, 0);\n"
-"background-color: rgb(255, 170, 127);\n"
-"font: 12pt \"隶书\";\n"
-"\n"
-"")
+                                  "background-color: rgb(255, 170, 127);\n"
+                                  "font: 12pt \"隶书\";\n"
+                                  "\n"
+                                  "")
         self.D_key2.setCheckable(False)
         self.D_key2.setChecked(False)
         self.D_key2.setProperty("name", "")
         self.D_key2.setObjectName("D_key2")
         self.H_key1 = QtWidgets.QPushButton(self.splitter)
         self.H_key1.setStyleSheet("color: rgb(0, 0, 0);\n"
-"background-color: rgb(255, 25, 127);\n"
-"font: 12pt \"隶书\";\n"
-"\n"
-"")
+                                  "background-color: rgb(255, 25, 127);\n"
+                                  "font: 12pt \"隶书\";\n"
+                                  "\n"
+                                  "")
         self.H_key1.setCheckable(False)
         self.H_key1.setChecked(False)
         self.H_key1.setProperty("name", "")
         self.H_key1.setObjectName("H_key1")
         self.H_key2 = QtWidgets.QPushButton(self.splitter)
         self.H_key2.setStyleSheet("color: rgb(0, 0, 0);\n"
-"background-color: rgb(255, 170, 127);\n"
-"font: 12pt \"隶书\";\n"
-"\n"
-"")
+                                  "background-color: rgb(255, 170, 127);\n"
+                                  "font: 12pt \"隶书\";\n"
+                                  "\n"
+                                  "")
         self.H_key2.setCheckable(False)
         self.H_key2.setChecked(False)
         self.H_key2.setProperty("name", "")
         self.H_key2.setObjectName("H_key2")
         self.ok_key = QtWidgets.QPushButton(self.splitter)
         self.ok_key.setStyleSheet("color: rgb(0, 0, 0);\n"
-"background-color: rgb(170, 255, 255);\n"
-"font: 16pt \"隶书\";\n"
-"\n"
-"")
+                                  "background-color: rgb(170, 255, 255);\n"
+                                  "font: 16pt \"隶书\";\n"
+                                  "\n"
+                                  "")
         self.ok_key.setCheckable(False)
         self.ok_key.setChecked(False)
         self.ok_key.setProperty("name", "")
@@ -271,4 +272,3 @@ class Ui_HMI(object):
         self.H_key1.setText(_translate("HMI", "高度下限"))
         self.H_key2.setText(_translate("HMI", "高度上限"))
         self.ok_key.setText(_translate("HMI", "尺寸确认"))
-
